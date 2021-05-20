@@ -1,1 +1,9 @@
-/venv
+/venv/
+/.vscode/
+/.idea/
+/venvAc5/
+ac5.db
+/__pycache__/
+app/controller/__pycache__/
+app/model/__pycache__/
+app/__pycache__/
