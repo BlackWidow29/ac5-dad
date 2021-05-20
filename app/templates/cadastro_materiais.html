@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+</head>
+<body>
+<div>
+    <form action="{{ url_for('adicionar_material') }}" method="post">
+        <input type="text" name="preco" id="preco"/>
+        <input type="text" name="descricao" id="descricao"/>
+        <input type="text" name="tipo" id="tipo"/>
+        <button type="submit">Adicionar Material</button>
+    </form>
+</div>
+<div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+<div>
+        <form action="" method="post">
+        <input type="text" name="descricao" id="descricao"/>
+        <input type="text" name="valormaodeobra" id="valormaodeobra"/>
+        <button type="submit">Calcular valor total</button>
+    </form>
+</div>
+<div>
+    <h4>Valor total:</h4><br/>
+    <a href="#"><button>Cadastrar servico</button></a>
+</div>
+</body>
+</html>
