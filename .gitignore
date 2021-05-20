@@ -1,4 +1,5 @@
 /venv
 /.vscode
 /.idea
-dborcamento
+/venvAc5
+/ac5.db
