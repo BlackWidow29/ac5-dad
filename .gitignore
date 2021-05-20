@@ -1,4 +1,5 @@
 /venv
-/venvAc5
 /.vscode
+/.idea
+/venvAc5
 /ac5.db
