@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
 
-# class Orcamento(db.model):
+# class Orcamento(db.Model):
 #     __tablename__ = "tbOrcamento"
 #     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 #     nome_cliente = db.Column(db.String(100))
@@ -42,43 +42,33 @@ class User(db.Model, UserMixin):
 #         self.valor_total = valor_total
 
 
-class Material(db.model):
+class Material(db.Model):
     __tablename__ = "tbMaterial"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     preco = db.Column(db.Float)
-    cor = db.Column(db.String(100))
     descricao = db.Column(db.String(255))
-    categoria = db.Column(db.String(50))
     tipo = db.Column(db.String(50))
-    qtd_disponivel = db.Column(db.Integer)
 
-    def __init__(self, preco, cor, descricao, categoria, tipo, qtd_disponivel):
+    def __init__(self, preco, descricao, tipo):
         self.preco = preco
-        self.cor = cor
         self.descricao = descricao
-        self.categoria = categoria
         self.tipo = tipo
-        self.qtd_disponivel = qtd_disponivel
 
 
-class Servico(db.model):
+class Servico(db.Model):
     __tablename__ = "tbServico"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descricao = db.Column(db.String(255))
-    qtd_material = db.Column(db.Integer)
     valor_mao_de_obra = db.Column(db.Float)
     valor_total = db.Column(db.Float)
-    qtd_metros = db.Column(db.Integer)
 
-    def __init__(self, descricao, qtd_material, valor_mao_de_obra, valor_total, qtd_metros):
+    def __init__(self, descricao, valor_mao_de_obra, valor_total):
         self.descricao = descricao
-        self.qtd_material = qtd_material
         self.valor_mao_de_obra = valor_mao_de_obra
         self.valor_total = valor_total
-        self.qtd_metros = qtd_metros
 
 
-class MaterialServico(db.model):
+class MaterialServico(db.Model):
     __tablename__ = "tbMaterialServico"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_material = db.Column(db.Integer, db.ForeignKey('tbMaterial.id'))
