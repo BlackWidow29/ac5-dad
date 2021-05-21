@@ -1,7 +1,10 @@
 from flask import render_template, request, redirect, url_for, make_response
 from flask_login import login_user, logout_user
 from app import app, db
-from app.model.tables import User, Servico, Material, MaterialServico
+from app.model.User import User
+from app.model.MaterialServico import MaterialServico
+from app.model.Material import Material
+from app.model.Servico import Servico
 from ast import literal_eval
 from sqlalchemy import func
 
@@ -117,6 +120,7 @@ def calcular_valor_total():
 
         valor_total += int(valor_mao_de_obra)
         servico = {"descricao": descricao, "valor_mao_de_obra": valor_mao_de_obra, "valor_total": valor_total}
-        resp = make_response(render_template('cadastro_materiais.html', valor_total=valor_total, lista_material=lista_material))
+        resp = make_response(
+            render_template('cadastro_materiais.html', valor_total=valor_total, lista_material=lista_material))
         resp.set_cookie('servico', str(servico))
         return resp
