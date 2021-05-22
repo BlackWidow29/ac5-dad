@@ -1,35 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
+
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
+  <link rel="stylesheet"
+    href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+  <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+  <link rel="stylesheet" href="/static/css/main.css">
 </head>
-<body>
-<div>
-    <form action="{{ url_for('adicionar_material') }}" method="post">
-        <input type="text" name="preco" id="preco"/>
-        <input type="text" name="descricao" id="descricao"/>
-        <input type="text" name="tipo" id="tipo"/>
-        <button type="submit">Adicionar Material</button>
+
+<body class="profile-page">
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="https://cdn.discordapp.com/attachments/746027270845759568/845342039252009020/logoexten.png" width="220"
+        height="40" class="d-inline-block align-top" alt=""></a>
+    <a class="nav-item nav-link active" href="#">Inicio</a>
+    <a class="nav-item nav-link" href="#">Materiais / Serviços</a>
+    <a class="nav-item nav-link" href="#">Auxiliares</a>
+    <a class="nav-item nav-link" href="#">Lucros obtidos</a>
+  </nav>
+
+  <!-- Cor laranja de fundo -->
+
+  <div class="page-header"
+    style="background-image: url(https://cdn.discordapp.com/attachments/746027270845759568/844731580400664626/background.png);">
+  </div>
+
+  <!-- Foto logo do cliente e suas estilizações -->
+
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile">
+              <div class="avatar">
+              </div>
+              <div class="name">
+                <h3 class="titleservices">Materiais / Serviços </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulários -->
+
+      <form>
+        <div class="form-row col-9">
+          <div class="col-4">
+            <input type="number" class="form-control" name="preco" id="preco" placeholder="Preço">
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
+          </div>
+          <div class="col-4">
+            <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Adicionar Material</button>
+
+        </div>
+        <div>
+          <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+
+    </div>
     </form>
-</div>
-<div>
-    <ul>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-</div>
-<div>
-        <form action="" method="post">
-        <input type="text" name="descricao" id="descricao"/>
-        <input type="text" name="valormaodeobra" id="valormaodeobra"/>
-        <button type="submit">Calcular valor total</button>
-    </form>
-</div>
-<div>
-    <h4>Valor total:</h4><br/>
-    <a href="#"><button>Cadastrar servico</button></a>
-</div>
+
+    <form>
+      <div class="form-row col-9">
+        <div class="col-5">
+          <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
+        </div>
+        <div class="col-5">
+          <input type="text" class="form-control" name="valormaodeobra" id="valormaodeobra" placeholder="VMO">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar servico</button>
+      </div>
+      <h4 class="valor">Valor total:</h4><br/>
+  </div>
+  </form>
+  
+
+  </div>
+  </div>
+  </div>
+
+  <!-- Rodapé / footer -->
+
+  <footer class="footer text-center ">
+    <p>Todos direitos reservados <a>Dev4U </a>2021</p>
+  </footer>
+
+  <!-- Scripts -->
+
+  <script type="text/javascript" src="main.js"></script>
+
+
 </body>
+
 </html>
