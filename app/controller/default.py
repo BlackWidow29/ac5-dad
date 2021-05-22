@@ -5,8 +5,11 @@ from app.model.User import User
 from app.model.MaterialServico import MaterialServico
 from app.model.Material import Material
 from app.model.Servico import Servico
+from app.model.Orcamento import Orcamento
+from app.model.Endereco import Endereco
 from ast import literal_eval
 from sqlalchemy import func
+from requests import api
 
 
 @app.route('/')
@@ -124,3 +127,42 @@ def calcular_valor_total():
             render_template('cadastro_materiais.html', valor_total=valor_total, lista_material=lista_material))
         resp.set_cookie('servico', str(servico))
         return resp
+
+
+@app.route('/pegarendereco/<cep>', methods=['POST', 'GET'])
+def pegar_endereco(cep):
+    dados_endereco = api.get(f"https://viacep.com.br/ws/{cep}/json/unicode/").json()
+    return dados_endereco
+
+
+@app.route('/orcamento', methods=['POST', 'GET'])
+def orcamento():
+    if request.method == 'POST':
+        cep = request.form['cep']
+        logradouro = request.form['logradouro']
+        bairro = request.form['bairro']
+        cidade = request.form['cidade']
+        estado = request.form['uf']
+        complemento = request.form['complemento']
+
+        nome_cliente = request.form['nome_cliente']
+        observacoes = request.form['observacoes']
+        valor_total = request.form['valor_total']
+        numero_endereco = request.form['numero_endereco']
+
+        endereco = Endereco.query.filter_by(cep=cep).first()
+
+        if not endereco:
+            endereco = Endereco(cep, logradouro, bairro, cidade, estado, complemento)
+            db.session.add(endereco)
+            db.session.commit()
+            endereco = Endereco.query.filter_by(cep=cep).first()
+
+        orcamento = Orcamento(nome_cliente, observacoes, valor_total, numero_endereco, endereco.id)
+        db.session.add(orcamento)
+        db.session.commit()
+
+        return redirect('/orcamento')
+
+    elif request.method == 'GET':
+        return render_template('cadastro_orcamento.html')

@@ -1,6 +1,5 @@
 from app import db
 
-
 class MaterialServico(db.Model):
     __tablename__ = "tbMaterialServico"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
