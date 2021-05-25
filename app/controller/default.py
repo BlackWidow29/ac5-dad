@@ -24,6 +24,7 @@ def cadastrar_materiais():
         literal_eval(lista_material)
     else:
         lista_material = {}
+        print(len(lista_material))
     return render_template('cadastro_materiais.html', valor_total=0, lista_material=lista_material)
 
 
