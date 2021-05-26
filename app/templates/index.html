@@ -1,12 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
+<!-- Header -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <title>Clear Grant</title>
+  <link rel="stylesheet"
+    href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+  <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+  <link rel="stylesheet" href="/static/css/css.css">
 </head>
-<body>
-    
+
+<body class="profile-page">
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="https://cdn.discordapp.com/attachments/746027270845759568/845342039252009020/logoexten.png" width="220"
+        height="40" class="d-inline-block align-top" alt=""></a>
+    <a class="nav-item nav-link active" href="#">Inicio</a>
+    <a class="nav-item nav-link" href="{{ url_for('cadastrar_materiais') }}">Materiais / Serviços</a>
+    <a class="nav-item nav-link" href="#">Auxiliares</a>
+    <a class="nav-item nav-link" href="#">Lucros obtidos</a>
+  </nav>
+
+  <!-- Cor laranja de fundo -->
+
+  <div class="page-header"
+    style="background-image: url(https://cdn.discordapp.com/attachments/746027270845759568/844731580400664626/background.png);">
+  </div>
+
+  <!-- Foto logo do cliente e suas estilizações -->
+
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile">
+              <div class="avatar">
+                <img
+                  src="https://cdn.discordapp.com/attachments/746027270845759568/844740364278693928/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals.png"
+                  alt="Circle Image" class="img-raised rounded-circle img-fluid">
+              </div>
+
+              <!-- Nome do cliente -->
+
+              <div class="name">
+                <h3 class="title">Giorni Service</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quadrados da home -->
+
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile-tabs">
+              <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+
+                <!-- Botão home -->
+
+                <li class="nav-item">
+                  <a class="nav-link active" href="#" role="tab" data-toggle="tab">
+                    <i class="material-icons">home</i>
+                    Inicio
+                  </a>
+                </li>
+
+                <!-- Botão Materiais e serviços -->
+
+                <li class="nav-item">
+                  <a class="nav-link" href="cadastro_materiais.html" role="tab" data-toggle="tab">
+                    <i class="material-icons">archive</i>
+                    Materiais e Serviços
+                  </a>
+                </li>
+
+                <!-- Botão Auxiliares -->
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#" role="tab" data-toggle="tab">
+                    <i class="material-icons">person</i>
+                    Auxiliares
+                  </a>
+                </li>
+
+                <!-- Botão lucros obtidos -->
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#" role="tab" data-toggle="tab">
+                    <i class="material-icons">favorite</i>
+                    Lucros obtidos
+                  </a>
+                </li>
+
+                <!-- Botão Orçamento -->
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#" role="tab" data-toggle="tab">
+                    <i class="material-icons">money</i>
+                    Orçamento
+                  </a>
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="tab-content tab-space">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé / footer -->
+
+  <footer class="footer text-center ">
+    <p>Todos direitos reservados <a>Dev4U </a>2021</p>
+  </footer>
+
+
+  <!-- Scripts -->
+
+  <script type="text/javascript" src="/static/js/main.js"></script>
+
 </body>
+
 </html>

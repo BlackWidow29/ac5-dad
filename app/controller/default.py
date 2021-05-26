@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, make_response
+from flask import render_template, request, redirect, url_for, make_response, session
 from flask_login import login_user, logout_user
 from app import app, db
 from app.model.User import User
@@ -14,7 +14,10 @@ from requests import api
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    if 'username' in session:
+        return render_template('index.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/cadastromateriais')
@@ -53,10 +56,11 @@ def login():
         if not User or not user.verify_password(password):
             return redirect(url_for('login'))
 
-        login_user(user)
+        #login_user(user)
+        session['username'] = user.name
         return redirect(url_for('home'))
-
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/logout')
