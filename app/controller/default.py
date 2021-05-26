@@ -61,7 +61,7 @@ def login():
             return redirect(url_for('home'))
         else:
             flash(str(response['response']), 'danger')
-            return redirect(url_for('login'))
+            return render_template('login.html')
 
     elif '_user_id' in session:
         return redirect(url_for('home'))
@@ -77,26 +77,26 @@ def logout():
 
 @app.route('/servico', methods=['GET', 'POST'])
 def servico():
-    servico_dic = literal_eval(request.cookies.get('servico'))
-    servico = Servico(servico_dic['descricao'], servico_dic['valor_mao_de_obra'], servico_dic['valor_total'])
-    lista_material = literal_eval(request.cookies.get('materiais'))
-    db.session.add(servico)
-    db.session.commit()
-    id_servico = db.session.query(func.max(Servico.id))
-    for material in lista_material:
-        material = Material(lista_material[material]['preco'], lista_material[material]['descricao'],
-                            lista_material[material]['tipo'])
-        db.session.add(material)
+    if request.method == 'POST':
+        servico_dic = literal_eval(request.cookies.get('servico'))
+        servico = Servico(servico_dic['descricao'], servico_dic['valor_mao_de_obra'], servico_dic['valor_total'])
+        lista_material = literal_eval(request.cookies.get('materiais'))
+        db.session.add(servico)
         db.session.commit()
-        id_material = db.session.query(func.max(Material.id))
-        material_servico = MaterialServico(id_material, id_servico)
-        db.session.add(material_servico)
-        db.session.commit()
-    resp = make_response(redirect('/cadastromateriais'))
-    resp.set_cookie('servico', '', expires=0)
-    resp.set_cookie('materiais', '', expires=0)
-    return resp
-
+        id_servico = db.session.query(func.max(Servico.id))
+        for material in lista_material:
+            material = Material(lista_material[material]['preco'], lista_material[material]['descricao'],
+                                lista_material[material]['tipo'])
+            db.session.add(material)
+            db.session.commit()
+            id_material = db.session.query(func.max(Material.id))
+            material_servico = MaterialServico(id_material, id_servico)
+            db.session.add(material_servico)
+            db.session.commit()
+        resp = make_response(redirect('/cadastromateriais'))
+        resp.set_cookie('servico', '', expires=0)
+        resp.set_cookie('materiais', '', expires=0)
+        return resp
 
 @app.route('/adicionarmaterial', methods=['POST'])
 def adicionar_material():

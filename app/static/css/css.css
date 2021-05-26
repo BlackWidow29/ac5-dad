@@ -4,12 +4,11 @@ html *{
 
 .valor{
  color: #ff5700;
- margin-left: 140px;
  font-weight: bold; 
  
 }
 
-ul { 
+.lista { 
  color: #ff5700;
  margin-left: 140px;
 
@@ -199,7 +198,7 @@ p {
 .nav-pills .nav-item i {
     display: block;
     font-size: 30px;
-    padding: 15px 0;
+    padding: 12px 0;
 }
 
 .tab-space {
@@ -238,12 +237,12 @@ img.rounded {
 }
 
 
-.btn-primary:hover.custom-file-control:before, .btn.btn-primary:hover{
+.btn-primary:hover, .custom-file-control:before, .btn.btn-primary:hover{
     color: #FFF;
     background-color: #ff5700;
 }
 
-.btn-primary:active.custom-file-control:active, .btn.btn-primary:active{
+.btn-primary:active,.custom-file-control:active, .btn.btn-primary:active{
     color: #FFF;
     background-color: #c04000;
 }
