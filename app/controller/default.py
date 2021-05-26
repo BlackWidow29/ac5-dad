@@ -14,7 +14,7 @@ from requests import api
 
 @app.route('/')
 def home():
-    if 'username' in session:
+    if '_user_id' in session:
         return render_template('index.html')
     else:
         return render_template('login.html')
@@ -56,8 +56,7 @@ def login():
         if not User or not user.verify_password(password):
             return redirect(url_for('login'))
 
-        #login_user(user)
-        session['username'] = user.name
+        login_user(user)
         return redirect(url_for('home'))
     else:
         return render_template('login.html')
