@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, make_response, session
+from flask import render_template, request, redirect, url_for, make_response, session, flash
 from flask_login import login_user, logout_user
 from app import app, db
 from app.model.User import User
@@ -10,7 +10,7 @@ from app.model.Endereco import Endereco
 from ast import literal_eval
 from sqlalchemy import func
 from requests import api
-from json import dumps
+from json import loads, dumps
 
 
 @app.route('/')
@@ -52,17 +52,18 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        dados = {}
-        dados['email'] = email
-        dados['password'] = password
-        literal_eval(str(dados))
-        #dados = literal_eval({"email": email, "password": password})
+        response = api.post(f'http://127.0.0.1:5001/loginApi/{email}/{password}').json()
 
-        response = api.post('http://127.0.0.1:5001/loginApi', json=dados).json()
-        print(response)
-        print(type(response))
+        if type(response['response']) is int:
+            id = response['response']
+            user = User.query.filter_by(id=id).first()
+            login_user(user)
+            return redirect(url_for('home'))
+        else:
+            flash(str(response['response']), 'danger')
+            return redirect(url_for('login'))
 
-        login_user(response['response'])
+    elif '_user_id' in session:
         return redirect(url_for('home'))
     else:
         return render_template('login.html')
