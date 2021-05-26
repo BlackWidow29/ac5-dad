@@ -1,64 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro de orçamento</title>
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesgeet"
+        href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    <link rel="stylesheet" href="/static/css/css.css">
 </head>
 
-<body>
-    <div>
-        <form action="{{ url_for('orcamento') }}" method="post">
-            <label for="cep">CEP</label>
-            <input name="cep" id="cep" type="text" required />
-            <label for="logradouro">Logradouro</label>
-            <input name="logradouro" id="logradouro" type="text" required />
-            <label for="complemento">Complemento</label>
-            <input name="complemento" id="complemento" type="text" />
-            <label for="numero_endereco">Numero do Endereco</label>
-            <input type="text" id="numero_endereco" name="numero_endereco" />
-            <label for="cidade">Cidade</label>
-            <input name="cidade" id="cidade" type="text" required />
-            <label for="uf">Estado</label>
-            <input name="bairro" id="bairro" type="text" required />
-            <label for="uf">Estado</label>
-            <select name="uf" id="uf">
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-            </select>
-            <label for="nome_cliente">Nome do Cliente</label>
-            <input type="text" id="nome_cliente" name="nome_cliente" />
-            <label for="observacoes">Observações</label>
-            <input type="text" id="observacoes" name="observacoes" />
-            <label for="valor_total">Valor Total</label>
-            <input type="text" id="valor_total" name="valor_total" />
-            <button type="submit">Cadastrar</button>
-        </form>
+<body class="profile-page">
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://cdn.discordapp.com/attachments/746027270845759568/845342039252009020/logoexten.png"
+                width="220" height="40" class="d-inline-block align-top" alt=""></a>
+        <a class="nav-item nav-link active" href="/">Inicio</a>
+        <a class="nav-item nav-link" href="/cadastromateriais">Materiais / Serviços</a>
+        <a class="nav-item nav-link" href="#">Auxiliares</a>
+        <a class="nav-item nav-link" href="/orcamento">Orçamento</a>
+        <a class="nav-item nav-link" href="/logout">Sair</a>
+    </nav>
+
+    <!-- Cor laranja de fundo -->
+
+    <div class="page-header"
+        style="background-image: url(https://cdn.discordapp.com/attachments/746027270845759568/844731580400664626/background.png);">
+    </div>
+
+    <!-- Foto logo do cliente e suas estilizações -->
+
+    <div class="main main-raised">
+        <div class="profile-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <div class="profile">
+                            <div class="avatar">
+                            </div>
+                            <div class="name">
+                                <h3 class="titleservices">Orçamento </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="{{ url_for('orcamento') }}" method="post">
+                <div class="form-row col-9">
+                    <div class="col-4">
+                        <input placeholder="*CEP" name="cep" id="cep" type="text" required />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Logradouro" name="logradouro" id="logradouro" type="text" required />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Logradouro" name="complemento" id="complemento" type="text" />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Número" type="text" id="numero_endereco" name="numero_endereco" />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Cidade" name="cidade" id="cidade" type="text" required />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Bairro" name="bairro" id="bairro" type="text" required />
+                    </div>
+                    <select name="uf" id="uf">
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                    <div class="col-4">
+                        <input placeholder="*Nome do cliente" type="text" id="nome_cliente" name="nome_cliente" />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Observações" type="text" id="observacoes" name="observacoes" />
+                    </div>
+                    <div class="col-4">
+                        <input placeholder="*Valor total" type="text" id="valor_total" name="valor_total" />
+                    </div>
+                    <button type="submit">Cadastrar</button>
+                </div>
+            </form>
+        </div>
     </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="../static/js/main.js"></script>

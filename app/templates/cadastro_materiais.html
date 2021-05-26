@@ -3,114 +3,126 @@
 
 
 <head>
-  <link rel="stylesheet"
-    href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-    integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css"
-    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
-  <link rel="stylesgeet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
-  <link rel="stylesheet" href="/static/css/css.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesgeet"
+          href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    <link rel="stylesheet" href="/static/css/css.css">
 </head>
 
 <body class="profile-page">
 
-  <!-- Navbar -->
+<!-- Navbar -->
 
-  <nav class="navbar navbar-light bg-light">
+<nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="index.html">
-      <img src="https://cdn.discordapp.com/attachments/746027270845759568/845342039252009020/logoexten.png" width="220"
-        height="40" class="d-inline-block align-top" alt=""></a>
-    <a class="nav-item nav-link active" href="#">Inicio</a>
-    <a class="nav-item nav-link" href="#">Materiais / Serviços</a>
+        <img src="https://cdn.discordapp.com/attachments/746027270845759568/845342039252009020/logoexten.png"
+             width="220"
+             height="40" class="d-inline-block align-top" alt=""></a>
+    <a class="nav-item nav-link active" href="/">Inicio</a>
+    <a class="nav-item nav-link" href="/cadastromateriais">Materiais / Serviços</a>
     <a class="nav-item nav-link" href="#">Auxiliares</a>
-    <a class="nav-item nav-link" href="#">Lucros obtidos</a>
-  </nav>
+    <a class="nav-item nav-link" href="/orcamento">Orçamento</a>
+    <a class="nav-item nav-link" href="/logout">Sair</a>
+</nav>
 
-  <!-- Cor laranja de fundo -->
+<!-- Cor laranja de fundo -->
 
-  <div class="page-header"
-    style="background-image: url(https://cdn.discordapp.com/attachments/746027270845759568/844731580400664626/background.png);">
-  </div>
+<div class="page-header"
+     style="background-image: url(https://cdn.discordapp.com/attachments/746027270845759568/844731580400664626/background.png);">
+</div>
 
-  <!-- Foto logo do cliente e suas estilizações -->
+<!-- Foto logo do cliente e suas estilizações -->
 
-  <div class="main main-raised">
+<div class="main main-raised">
     <div class="profile-content">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 ml-auto mr-auto">
-            <div class="profile">
-              <div class="avatar">
-              </div>
-              <div class="name">
-                <h3 class="titleservices">Materiais / Serviços </h3>
-              </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                    <div class="profile">
+                        <div class="avatar">
+                        </div>
+                        <div class="name">
+                            <h3 class="titleservices">Materiais / Serviços </h3>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Formulários -->
-
-      <form>
-        <div class="form-row col-9">
-          <div class="col-4">
-            <input type="number" class="form-control" name="preco" id="preco" placeholder="Preço">
-          </div>
-          <div class="col-4">
-            <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
-          </div>
-          <div class="col-4">
-            <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Adicionar Material</button>
-
-        </div>
-        <div>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
         </div>
 
+        <!-- Formulários -->
+
+        <form action="{{ url_for('adicionar_material') }}" method="post">
+            <div class="form-row col-9">
+                <div class="col-4">
+                    <input type="number" class="form-control" name="preco" id="preco" placeholder="Preço">
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
+                </div>
+                <div class="col-4">
+                    <input type="text" class="form-control" name="tipo" id="tipo" placeholder="Tipo">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Adicionar Material</button>
+
+            </div>
+            <div>
+                {% for material in lista_material %}
+                    <ul>
+                        <li>{{ lista_material[material]['preco'] }}</li>
+                        <li>{{ lista_material[material]['descricao'] }}</li>
+                        <li>{{ lista_material[material]['tipo'] }}</li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </form>
+
+        <form action="{{ url_for('calcular_valor_total') }}" method="post">
+            <div class="form-row col-9">
+                <div class="col-5">
+                    <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" name="valormaodeobra" id="valormaodeobra" placeholder="VMO">
+                </div>
+                <div class="col-5">
+                    <button type="submit" class="btn btn-primary">Calcular valor total</button>
+
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </form>
+
+        <form action="{{ url_for('servico') }}" method="post">
+            <div class="form-row col-9">
+                <div class="col-5">
+                    <h4 class="valor">Valor total: {{ valor_total }}</h4><br/>
+                    <button type="submit" class="btn btn-primary">Cadastrar servico</button>
+                </div>
+            </div>
+            <div>
+
+            </div>
+        </form>
     </div>
-    </form>
-
-    <form>
-      <div class="form-row col-9">
-        <div class="col-5">
-          <input type="text" class="form-control" name="descricao" id="descricao" placeholder="Descrição">
-        </div>
-        <div class="col-5">
-          <input type="text" class="form-control" name="valormaodeobra" id="valormaodeobra" placeholder="VMO">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Calcular valor total</button>
-      </div>
-        <div>
-            <a href="#"><button class="btn btn-primary">Cadastrar servico</button></a>
-        </div>
-      <h4 class="valor">Valor total: </h4><br/>
-  </div>
-  </form>
 
 
-  </div>
-  </div>
-  </div>
+    <!-- Rodapé / footer -->
 
-  <!-- Rodapé / footer -->
+    <footer class="footer text-center ">
+        <p>Todos direitos reservados <a>Dev4U </a>2021</p>
+    </footer>
 
-  <footer class="footer text-center ">
-    <p>Todos direitos reservados <a>Dev4U </a>2021</p>
-  </footer>
+    <!-- Scripts -->
 
-  <!-- Scripts -->
-
-  <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 
 
 </body>
