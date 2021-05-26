@@ -10,6 +10,7 @@ from app.model.Endereco import Endereco
 from ast import literal_eval
 from sqlalchemy import func
 from requests import api
+from json import dumps
 
 
 @app.route('/')
@@ -51,12 +52,17 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        user = User.query.filter_by(email=email).first()
+        dados = {}
+        dados['email'] = email
+        dados['password'] = password
+        literal_eval(str(dados))
+        #dados = literal_eval({"email": email, "password": password})
 
-        if not User or not user.verify_password(password):
-            return redirect(url_for('login'))
+        response = api.post('http://127.0.0.1:5001/loginApi', json=dados).json()
+        print(response)
+        print(type(response))
 
-        login_user(user)
+        login_user(response['response'])
         return redirect(url_for('home'))
     else:
         return render_template('login.html')
