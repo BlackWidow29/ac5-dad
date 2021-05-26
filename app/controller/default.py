@@ -1,14 +1,24 @@
-from flask import render_template, request, redirect, url_for, make_response
+from flask import render_template, request, redirect, url_for, make_response, session, flash
 from flask_login import login_user, logout_user
 from app import app, db
-from app.model.tables import User, Servico, Material, MaterialServico
+from app.model.User import User
+from app.model.MaterialServico import MaterialServico
+from app.model.Material import Material
+from app.model.Servico import Servico
+from app.model.Orcamento import Orcamento
+from app.model.Endereco import Endereco
 from ast import literal_eval
 from sqlalchemy import func
+from requests import api
+from json import loads, dumps
 
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    if '_user_id' in session:
+        return render_template('index.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/cadastromateriais')
@@ -18,6 +28,7 @@ def cadastrar_materiais():
         literal_eval(lista_material)
     else:
         lista_material = {}
+        print(len(lista_material))
     return render_template('cadastro_materiais.html', valor_total=0, lista_material=lista_material)
 
 
@@ -41,15 +52,21 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        user = User.query.filter_by(email=email).first()
+        response = api.post(f'http://127.0.0.1:5001/loginApi/{email}/{password}').json()
 
-        if not User or not user.verify_password(password):
-            return redirect(url_for('login'))
+        if type(response['response']) is int:
+            id = response['response']
+            user = User.query.filter_by(id=id).first()
+            login_user(user)
+            return redirect(url_for('home'))
+        else:
+            flash(str(response['response']), 'danger')
+            return render_template('login.html')
 
-        login_user(user)
+    elif '_user_id' in session:
         return redirect(url_for('home'))
-
-    return render_template('login.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/logout')
@@ -60,26 +77,26 @@ def logout():
 
 @app.route('/servico', methods=['GET', 'POST'])
 def servico():
-    servico_dic = literal_eval(request.cookies.get('servico'))
-    servico = Servico(servico_dic['descricao'], servico_dic['valor_mao_de_obra'], servico_dic['valor_total'])
-    lista_material = literal_eval(request.cookies.get('materiais'))
-    db.session.add(servico)
-    db.session.commit()
-    id_servico = db.session.query(func.max(Servico.id))
-    for material in lista_material:
-        material = Material(lista_material[material]['preco'], lista_material[material]['descricao'],
-                            lista_material[material]['tipo'])
-        db.session.add(material)
+    if request.method == 'POST':
+        servico_dic = literal_eval(request.cookies.get('servico'))
+        servico = Servico(servico_dic['descricao'], servico_dic['valor_mao_de_obra'], servico_dic['valor_total'])
+        lista_material = literal_eval(request.cookies.get('materiais'))
+        db.session.add(servico)
         db.session.commit()
-        id_material = db.session.query(func.max(Material.id))
-        material_servico = MaterialServico(id_material, id_servico)
-        db.session.add(material_servico)
-        db.session.commit()
-    resp = make_response(redirect('/cadastromateriais'))
-    resp.set_cookie('servico', '', expires=0)
-    resp.set_cookie('materiais', '', expires=0)
-    return resp
-
+        id_servico = db.session.query(func.max(Servico.id))
+        for material in lista_material:
+            material = Material(lista_material[material]['preco'], lista_material[material]['descricao'],
+                                lista_material[material]['tipo'])
+            db.session.add(material)
+            db.session.commit()
+            id_material = db.session.query(func.max(Material.id))
+            material_servico = MaterialServico(id_material, id_servico)
+            db.session.add(material_servico)
+            db.session.commit()
+        resp = make_response(redirect('/cadastromateriais'))
+        resp.set_cookie('servico', '', expires=0)
+        resp.set_cookie('materiais', '', expires=0)
+        return resp
 
 @app.route('/adicionarmaterial', methods=['POST'])
 def adicionar_material():
@@ -117,6 +134,46 @@ def calcular_valor_total():
 
         valor_total += int(valor_mao_de_obra)
         servico = {"descricao": descricao, "valor_mao_de_obra": valor_mao_de_obra, "valor_total": valor_total}
-        resp = make_response(render_template('cadastro_materiais.html', valor_total=valor_total, lista_material=lista_material))
+        resp = make_response(
+            render_template('cadastro_materiais.html', valor_total=valor_total, lista_material=lista_material))
         resp.set_cookie('servico', str(servico))
         return resp
+
+
+@app.route('/pegarendereco/<cep>', methods=['POST', 'GET'])
+def pegar_endereco(cep):
+    dados_endereco = api.get(f"https://viacep.com.br/ws/{cep}/json/unicode/").json()
+    return dados_endereco
+
+
+@app.route('/orcamento', methods=['POST', 'GET'])
+def orcamento():
+    if request.method == 'POST':
+        cep = request.form['cep']
+        logradouro = request.form['logradouro']
+        bairro = request.form['bairro']
+        cidade = request.form['cidade']
+        estado = request.form['uf']
+        complemento = request.form['complemento']
+
+        nome_cliente = request.form['nome_cliente']
+        observacoes = request.form['observacoes']
+        valor_total = request.form['valor_total']
+        numero_endereco = request.form['numero_endereco']
+
+        endereco = Endereco.query.filter_by(cep=cep).first()
+
+        if not endereco:
+            endereco = Endereco(cep, logradouro, bairro, cidade, estado, complemento)
+            db.session.add(endereco)
+            db.session.commit()
+            endereco = Endereco.query.filter_by(cep=cep).first()
+
+        orcamento = Orcamento(nome_cliente, observacoes, valor_total, numero_endereco, endereco.id)
+        db.session.add(orcamento)
+        db.session.commit()
+
+        return redirect('/orcamento')
+
+    elif request.method == 'GET':
+        return render_template('cadastro_orcamento.html')
